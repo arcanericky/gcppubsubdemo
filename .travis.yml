@@ -1,0 +1,19 @@
+language: go
+
+go:
+  - 1.x
+  - master
+
+git:
+  depth: 1
+
+script:
+  - go get -v ./...
+  - diff -u <(echo -n) <(gofmt -d -s .)
+  - go vet . ./cmd/...
+  - go build -o gcppubsubdemo ./cmd/...
+
+matrix:
+  allow_failures:
+    - go: master
+  fast_finish: true
